@@ -1,0 +1,31 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.posts {
+  width: 60%;
+  float: left;
+}
+
+.new-post {
+  width: 35%;
+  float: right;
+  border: 1px solid #CCC;
+  padding: 10px;
+}
+
+.post-preview {
+  border: 1px solid #CCC;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.post-preview:hover {
+  background-color: #DDD;
+  cursor: pointer;
+}

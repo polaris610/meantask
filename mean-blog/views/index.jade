@@ -1,0 +1,32 @@
+!!! 5
+html(ng-app)
+  head
+    title Sample MEAN Blog
+    link(rel='stylesheet', href='/css/style.css')
+
+    script(type="text/javascript")
+      var blogPosts = !{JSON.stringify(blogPosts)};
+    script(type='text/javascript', src='//ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.min.js')
+    script(type="text/javascript", src="/js/app.js")
+
+  body
+
+    div.posts(ng-controller="Controllers.Posts")
+      div.post-preview(ng-repeat="post in posts",ng-click="showPost(post)")
+        h2 {{post.title}}
+        p {{post.date | date:'shortDate'}} by {{post.author}}
+        div(ng-hide="!post.show") {{post.content}}
+
+    div.new-post(ng-controller="Controllers.NewPost")
+      h2 New Post
+      input(type="text",placeholder="Title",ng-model="title")
+      input(type="text",placeholder="Author",ng-model="author")
+      br
+      br
+      b Content
+      br
+      textarea(ng-model="content")
+      hr
+      button(ng-click="submit()") Submit
+
+    
