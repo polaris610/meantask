@@ -1,0 +1,56 @@
+<section class="container">
+    <section data-ng-init="find()">
+
+        <div class="row">
+            <div class="col-sm-12">
+
+                <div class="page-header">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h2>Blog</h2>
+                        </div>
+                        <div class="col-sm-6 right">
+                            <h2 data-ng-show="canCreate">
+                                <a href="/#!/blog/create">
+                                    <button type="button" class="btn btn-success">
+                                        <i class="glyphicon glyphicon-plus"></i>
+                                        New Post
+                                    </button>
+                                </a>
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <a data-ng-href="#!/blog/{{featured._id}}">
+                            <h2 data-ng-bind="featured.title[featured.post_language]"></h2>
+                        </a>
+                        <div ng-bind-html="featured.body[featured.post_language]"></div>
+                        <small class="list-group-item-text">
+                            Posted on
+                            <span data-ng-bind="featured.created | date:'mediumDate'"></span>
+                        </small>
+                        <hr>
+                    </div>
+                    <div data-ng-repeat="post in posts" class="col-sm-12">
+                        <a data-ng-href="#!/blog/{{post._id}}">
+                            <h2 data-ng-bind="post.title[post.post_language]"></h2>
+                        </a>
+                        <div ng-bind-html="post.body[post.post_language]"></div>
+                        <small class="list-group-item-text">
+                            Posted on
+                            <span data-ng-bind="post.created | date:'mediumDate'"></span>
+                        </small>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="alert alert-warning text-center" data-ng-hide="!posts.$resolved || posts.length">
+            No Content available yet?
+        </div>
+    </section>
+</section>

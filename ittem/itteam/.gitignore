@@ -1,0 +1,8 @@
+.DS_Store
+node_modules/
+public/dist
+public/lib
+public/fonts
+app/tests/coverage/
+forever/
+.idea

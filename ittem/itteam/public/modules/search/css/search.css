@@ -1,0 +1,61 @@
+.filters {
+    border: 1px solid #bbb;
+    border-radius: 5px;
+    padding: 10px;
+    background: #ddd;
+    color: #0D8FDB;
+    margin-bottom: 50px;
+}
+.filter {
+    text-align: left;
+}
+.searchPage {
+    margin-bottom: 50px;
+}
+.searchPage .responsive-menu {
+    margin-top: 10px;
+}
+.filter__body > div {
+    margin-left: 10px;
+
+}
+.filter__title  h3 {
+     font-size: 1rem;
+    margin-left: 20px;
+}
+.searchPage .affix {
+    width: 100%;
+    z-index: 10;
+    top: 50px;
+}
+.searchPage .thumbnail {
+    height: 227px;
+    overflow: hidden;
+}
+.searchPage .bookCover {
+    height: 60%;
+}
+@media only screen and (max-width: 768px) {
+    .filter__title  h3 {
+        padding: 0;
+    }
+    .searchPage .responsive-menu .menu {
+        overflow-y: scroll;
+        height: 350px;
+        border-radius: 8px;
+    }
+    .filters {
+        margin-bottom: 0;
+    }
+    .searchPage .thumbnail,
+    .searchPage .bookCover {
+        height: auto;
+    }
+    .searchPage .page-header {
+        margin: 0 0 15px;
+    }
+    .searchPage .page-header h2 {
+        float: left;
+        margin-top: 6px;
+    }
+}

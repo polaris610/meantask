@@ -1,0 +1,139 @@
+<section class="container">
+    <section>
+        <div class="page-header newBook__header">
+            <h1>
+                <a data-ng-href="/#!/{{backUrl}}" data-ng-if="book._id">
+                    <i class="glyphicon glyphicon-arrow-left"></i>
+                    Back to book
+                </a>
+                <span data-ng-if="book._id">Edit book</span>
+                <span data-ng-if="!book._id">New Book</span>
+            </h1>
+        </div>
+        <form name="newBook" action="" class="col-md-12 newBook">
+            <div class="newBook__options">
+                <div class="row">
+                    <div class="col-sm-6 form-group">
+                        <div class="checkbox center">
+                            <label for="featured">
+                                <input id="featured" type="checkbox" name="featured" data-ng-model="book.featured"/>
+                                Is featured book?
+                            </label>
+                        </div>
+                        <div class="checkbox center">
+                            <p>Languages available for this Book</p>
+                            <label for="lang-en">
+                                <input id="lang-en" type="checkbox" name="lang-en" data-ng-model="book.language['English']"/>
+                                English
+                            </label>
+                            <label for="lang-ur">
+                                <input id="lang-ur" type="checkbox" name="lang-ur" data-ng-model="book.language['Urdu']"/>
+                                Urdu
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 center">
+                        <div>Thumbnail
+                            <div class="btn btn-primary" ngf-select ngf-change="upload($files)" ngf-multiple="false">
+                                <span data-ng-if="!book.thumbnail">Select File</span>
+                                <span data-ng-if="book.thumbnail">Change Thumbnail</span>
+                            </div>
+                            <a href="" class="btn btn-warning" data-ng-click="book.thumbnail = ''" data-ng-if="book.thumbnail">Delete thumbnail</a>
+                        </p>
+                        <div>
+                            <img class="img-responsive img-rounded center-block" data-ng-src="m/thumb/book/{{book.thumbnail}}" data-ng-show="book.thumbnail" alt=""/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="newBook__title">
+                <div class="row">
+                    <div class="col-sm-6 form-group" data-ng-if="book.language['English']">
+                        <label for="title-en">English title</label>
+                        <input id="title-en" type="text" class="form-control" name="title-en" data-ng-model="book.title.en" required/>
+                    </div>
+                    <div class="col-sm-6 col-ur form-group" data-ng-if="book.language['Urdu']">
+                        <label for="title-ur" >Urdu title</label>
+                        <input id="title-ur" type="text" class="form-control" name="title-ur" data-ng-model="book.title.ur" required/>
+                    </div>
+                </div>
+            </div>
+            <div class="newBook__description">
+                <div class="row">
+                    <div class="col-sm-6 form-group" data-ng-if="book.language['English']">
+                        <label for="description-en">English description</label>
+                        <input id="description-en" type="text" class="form-control" name="description-en" data-ng-model="book.description.en" required/>
+                    </div>
+                    <div class="col-sm-6 col-ur form-group" data-ng-if="book.language['Urdu']">
+                        <label for="description-ur" >Urdu description</label>
+                        <input id="description-ur" type="text" class="form-control" name="description-ur" data-ng-model="book.description.ur" required/>
+                    </div>
+                </div>
+            </div>
+            <div class="newBook__content" data-ng-if="!isCreating">
+                <div class="content__title">
+                    <p class="center-block">Content</p>
+                    <div class="row">
+                        <div class="col-sm-6 form-group" data-ng-if="book.language['English']">
+                            <label for="content__title--en">English title</label>
+                            <input id="content__title--en" type="text" class="form-control" name="content__title--en" data-ng-model="book.content.title.en" required/>
+                        </div>
+                        <div class="col-sm-6 col-ur form-group" data-ng-if="book.language['Urdu']">
+                            <label for="content__title--ur" >Urdu title</label>
+                            <input id="content__title--ur" type="text" class="form-control" name="content__title--ur" data-ng-model="book.content.title.ur" required/>
+                        </div>
+                    </div>
+                </div>
+                <div class="content__body">
+                    <div class="row">
+                        <div class="col-sm-6 form-group" data-ng-if="book.language['English']">
+                            <label for="body-en">English body</label>
+                            <textarea id="body-en" class="form-control" name="body-en" data-ng-model="book.content.content.en"></textarea>
+                        </div>
+                        <div class="col-sm-6 col-ur form-group" data-ng-if="book.language['Urdu']">
+                            <label for="body-ur" >Urdu body</label>
+                            <textarea id="body-ur" class="form-control" name="body-ur" data-ng-model="book.content.content.ur"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="newBook__options">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <span>Author</span>
+                        <ui-select ng-model="book.author" theme="bootstrap">
+                            <ui-select-match placeholder="Select author...">{{$select.selected.displayName}}</ui-select-match>
+                            <ui-select-choices repeat="item in authors | filter: $select.search">
+                                <div ng-bind-html="item.displayName | highlight: $select.search"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="col-sm-2">
+                        <label for="status">Status</label>
+                        <select name="status"
+                                class="form-control"
+                                id="status"
+                                data-ng-options="s as s for s in ['draft', 'open', 'closed']"
+                                data-ng-model="book.status"
+                                required>
+                        </select>
+                    </div>
+                    <div class="col-sm-2 newBook__action">
+                        <button class="btn btn-primary" data-ng-click="create()" data-ng-class="{disabled: !newBook.$valid}" data-ng-if="isCreating">Create</button>
+                        <button class="btn btn-primary" data-ng-click="update()" data-ng-class="{disabled: !newBook.$valid}" data-ng-if="!isCreating">Save</button>
+                    </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <!--<form name="createBook"-->
+                  <!--sf-schema="bookFormSchema.schema"-->
+                  <!--sf-form="bookFormSchema.form"-->
+                  <!--sf-model="book"-->
+                  <!--ng-submit="create(createBook)">-->
+            <!--</form>-->
+        </form>
+    </section>
+</section>

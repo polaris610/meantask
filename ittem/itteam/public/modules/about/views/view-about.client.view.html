@@ -1,0 +1,97 @@
+<section class="container">
+    <section data-ng-init="findOne()">
+        <div class="row">
+            <div class="col-sm-8">
+                <div class="page-header" data-ng-show="!canEdit">
+                    <div class="row">
+                        <div ng-if="about.about_language == 'en'" class="col-sm-12">
+                            <h3 data-ng-bind="about.title.en"></h3>
+                        </div>
+                        <div ng-if="about.about_language == 'ur'" class="col-sm-12 col-ur">
+                            <h3 data-ng-bind="about.title.ur"></h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div ng-if="about.about_language == 'en'" class="col-sm-12" ng-bind-html="body.en">
+                        </div>
+                        <div ng-if="about.about_language == 'ur'" class="col-sm-12 col-ur" ng-bind-html="body.ur">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Here comes the code for Editor/Reviwer -->
+
+                <div class="page-header" data-ng-show="canEdit">
+                    <ul class="nav nav-tabs">
+                        <li role="presentation" class="active"><a title="View page">View</a></li>
+                        <li role="presentation">
+                            <a href="/#!/about/{{about._id}}/edit" title="Edit about">
+                                <i class="glyphicon glyphicon-edit"></i>
+                                Edit
+                            </a>
+                        </li>
+                        <li role="presentation">
+                            <a title="Close about" data-ng-click="close();" data-ng-show="(about.status === 'open')">
+                                <i class="glyphicon glyphicon-remove"></i>
+                                Close
+                            </a>
+                            <a title="Open about" data-ng-click="open();" data-ng-show="(about.status !== 'open')">
+                                <i class="glyphicon glyphicon-ok"></i>
+                                Open
+                            </a>
+                        </li>
+                        <li role="presentation">
+                            <a data-ng-click="remove();" data-ng-show="Roles.hasAtLeastRole('admin')" title="Delete about">
+                                <i class="glyphicon glyphicon-trash"></i>
+                                Delete
+                            </a>
+                        </li>
+                    </ul>
+
+                    <div class="row">
+                        <div class="col-sm-12" ng-if="about.about_language == 'en'">
+                            <h3 data-ng-bind="about.title.en"></h3>
+                        </div>
+                        <div class="col-sm-12 col-ur" ng-if="about.about_language == 'ur'">
+                            <h3 data-ng-bind="about.title.ur"></h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12" ng-if="about.about_language == 'en'" ng-bind-html="body.en">
+                        </div>
+                        <div class="col-sm-12 col-ur" ng-if="about.about_language == 'ur'" ng-bind-html="body.ur">
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-4 col-md-4 pull-right right" data-ng-show="canEdit">
+                        <a class="btn btn-primary" href="/#!/about/{{about._id}}/edit" title="Edit about">
+                            <i class="glyphicon glyphicon-edit"></i>
+                        </a>
+                        <a class="btn btn-warning"
+                           title="Close about"
+                           data-ng-click="close();"
+                           data-ng-show="(about.status === 'open')">
+                            <i class="glyphicon glyphicon-remove"></i>
+                        </a>
+                        <a class="btn btn-success"
+                           title="Open about"
+                           data-ng-click="open();"
+                           data-ng-show="(about.status !== 'open')">
+                            <i class="glyphicon glyphicon-ok"></i>
+                        </a>
+                        <a class="btn btn-danger" data-ng-click="remove();" data-ng-show="Roles.hasAtLeastRole('admin')" title="Delete about">
+                            <i class="glyphicon glyphicon-trash"></i>
+                        </a>
+                        <p class="offset-top-20">
+                            <strong>Views:</strong>
+                            <span data-ng-show="canEdit" data-ng-bind="about.views"></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>

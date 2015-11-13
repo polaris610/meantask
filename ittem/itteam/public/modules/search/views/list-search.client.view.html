@@ -1,0 +1,132 @@
+<section class="container">
+    <section class="searchPage">
+        <div class="row">
+            <div id='top-nav' class="col-sm-offset-1 col-sm-3 visible-xs" affix>
+                <div class="top-nav__content clearfix">
+            </div>
+            </div>
+            <div class="col-sm-9 col-md-10">
+                <div class="row">
+                    <div ng-class="{'col-sm-12': !mobile}" replace-component target=".top-nav__content">
+                        <div class="page-header clearfix">
+                            <h2>Search results</h2>
+                            <div class="responsive-menu text-center pull-right visible-xs">
+                                <a href="" class="fa fa-list-ul fa-2x" data-ng-click="showMenu = !showMenu"></a>
+                                <div class="menu" data-ng-show="showMenu">
+                                </div> <!-- /.menu -->
+                            </div> <!-- /.responsive-menu -->
+                        </div>
+                    </div>
+                    <div data-ng-repeat="doc in docs" class="col-sm-4 col-md-3 col-lg-3">
+                        <div class="thumbnail">
+                            <a ng-href="#!/videos/{{doc._id}}" ng-show="doc._type == 'video'">
+                                <img ng-src="m/thumb/video/{{doc.embed.thumb}}">
+                            </a>
+                            <a ng-href="#!/books/{{doc._id}}" ng-if="doc._type == 'book'">
+                                <img class="bookCover" ng-src="m/thumb/book/{{doc.thumbnail}}">
+                            </a>
+                            <div class="caption">
+                                <h4>
+                                    <a ng-href="#!/videos/{{doc._id}}" data-ng-bind="doc.title.en | cut:true:27:' ...'" ng-if="doc._type == 'video'"></a>
+                                    <a ng-href="#!/books/{{doc._id}}" data-ng-bind="doc.title.en | cut:true:27:' ...'" ng-if="doc._type == 'book'"></a>
+                                    <a ng-href="#!/blog/{{doc._id}}" ng-if="doc._type == 'post'">{{ doc.title[doc.post_language] }}</a>
+                                </h4>
+                                <p data-ng-bind="doc.description.en | cut: true: 120:' ...'" ng-if="doc._type != 'post'"></p>
+                                <p ng-if="doc._type == 'post'">{{doc.body[doc.post_language] | cut:true:120:' ...' }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3 col-md-2" ng-show="docs.length">
+                <div class="page-header">
+                    <h2>Filters</h2>
+                </div>
+                <div class="form-horizontal filters" replace-component target="#top-nav .menu">
+                    <div class="filter" ng-if="categories.length">
+                        <div class="checkbox filter__title">
+                            <button type="button" class="close pull-left" aria-label="Close"
+                                    ng-show="showCross('video')" ng-click="resetFilter('category')">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h3>Video</h3>
+                        </div>
+                        <div class="filter__body">
+                            <div class="checkbox" ng-repeat="cat in categories">
+                                <label for="video-{{$index}}">
+                                    <input id="video-{{$index}}"
+                                           type="checkbox"
+                                           ng-model="filter.video[cat]"
+                                           ng-change="filterHandler('category', 'categories', cat, filter.video[cat])"/>
+                                    <span>({{categoriesCount[cat]}})</span>
+                                    {{cat | cut: true: 15:'...'}}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="filter" ng-if="bookAuthors.length">
+                        <div class="checkbox filter__title">
+                            <button type="button" class="close pull-left" aria-label="Close"
+                                    ng-show="showCross('book')" ng-click="resetFilter('book')">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h3>Books</h3>
+                        </div>
+                        <div class="filter__body">
+                            <div class="checkbox" ng-repeat="a in bookAuthors">
+
+                                <label for="book-{{$index}}">
+                                    <input id="book-{{$index}}"
+                                           type="checkbox"
+                                           ng-model="filter.book[a._id]"
+                                           ng-change="filterHandler('book', 'authors', a._id, filter.book[a._id])"/>
+                                    <span>({{bookCount[a.displayName]}})</span>
+                                    {{a.displayName | cut: true: 15:'...'}}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="filter" ng-if="blogAuthors.length">
+                        <div class="checkbox filter__title">
+                            <button type="button" class="close pull-left" aria-label="Close"
+                                    ng-show="showCross('blog')" ng-click="resetFilter('blog')">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h3>Blogs</h3>
+                        </div>
+                        <div class="filter__body">
+                            <div class="checkbox" ng-repeat="a in  blogAuthors">
+                                <label for="blog-{{$index}}">
+                                    <input id="blog-{{$index}}"
+                                           type="checkbox"
+                                           ng-model="filter.blog[a._id]"
+                                           ng-change="filterHandler('blog', 'authors', a._id, filter.blog[a._id])"/>
+                                    <span>({{blogCount[a.displayName]}})</span>
+                                    {{a.displayName | cut: true: 15:'...'}}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--<div class="col-sm-10 col-xs-12 videos__pagination text-center">-->
+                <!--<pagination total-items="bigTotalItems"-->
+                            <!--items-per-page="itemsPerPage"-->
+                            <!--ng-model="currentPage"-->
+                            <!--max-size="5"-->
+                            <!--class="pagination-sm"-->
+                            <!--boundary-links="true"-->
+                            <!--rotate="false"-->
+                            <!--num-pages="numPages">-->
+                <!--</pagination>-->
+            <!--</div>-->
+        </div>
+        <div class="row">
+            <div class="col-sm-10">
+                <div class="alert alert-warning text-center" data-ng-hide="docs.length">
+                    No results found.
+                </div>
+            </div>
+        </div>
+    </section>
+</section>

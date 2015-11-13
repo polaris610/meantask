@@ -1,0 +1,164 @@
+.books .responsive-menu {
+    margin-right: 15px;
+
+}
+.books .drop-menu.responsive-menu .menu {
+    top: 52px;
+}
+
+.subcats.author {
+    padding-top: 0;
+}
+.subcats.author dd {
+    margin-left: 40px;
+}
+.mar-b-15 {
+    margin-bottom: 15px;
+}
+.book .menu {
+    width: 20% !important;
+    max-width: 210px;
+    min-width: 150px;
+    max-height: 300px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+.book .responsive-menu .menu ul li {
+    display: block;
+}
+.affix {
+    width: 100%;
+    top: 50px;
+    left: 0;
+    margin-left: 0;
+}
+.top-nav__left {
+    float: left;
+}
+.affix .btn_lang {
+    padding: 2px 5px;
+    margin: 0 8px 0 7px;
+    background-color: #eeeeee;
+    background-color: rgba(238, 238, 238, 0.8);
+    border: none;
+}
+.affix .sub-nav {
+    padding: 9px 0;
+    background-color: white;
+    background-color: rgba(255,255,255,0.8);
+}
+.affix .sub-nav:hover {
+    background-color: white;
+    background-color: rgba(255,255,255,1);
+}
+.affix .side-nav {
+    display: none;
+}
+.affix .sub-nav {
+    display: inherit;
+}
+.sub-nav {
+    display: none;
+}
+.top-nav__title {
+    font-weight: bold;
+}
+.affix .addthis_toolbox {
+    display: inline-block;
+    margin-top: 0;
+    border-left: 1px solid #e7e7e7;
+    padding-left: 10px;
+}
+.affix .top-nav__title,
+.affix .chapters {
+    padding-right: 10px;
+    border-right: 1px solid #e7e7e7;
+}
+.affix .chapters {
+    padding-left: 10px;
+    border-left: 1px solid #e7e7e7;
+}
+.affix .top-nav__chapters-wrapper {
+    height: 23px;
+    overflow-y: hidden;
+    margin-left: 7px;
+}
+.affix .chapters a.active {
+    background-color: #eeeeee;
+    background-color: rgba(238, 238, 238, 0.8);
+    border-radius: 5px;
+}
+.affix .chapters a.active .glyphicon {
+    display: inline;
+}
+.affix .chapters ul a.active {
+    padding: 0 20px;
+}
+
+.affix .chapters ul {
+    height: 0;
+    padding: 0;
+}
+
+.chapters ul {
+    padding-left: 10px;
+    padding-bottom: 10px;
+    margin-left: 5px;
+}
+
+.chapters a {
+    padding: 4px 20px;
+    font-size: 13px;
+    color: #0D8FDB;
+    font-weight: 500;
+    cursor: pointer;
+}
+    .chapters a:hover {
+        opacity: 0.75;
+    }
+.chapters a .glyphicon {
+    display: none;
+}
+.book-chapter,
+.book-subchapter {
+    padding-top: 30px;
+    padding-bottom: 10px;
+}
+.newBook .col-ur {
+    font-size: 1.2rem;
+    line-height: 23px;
+}
+.newBook__action {
+    margin-top: 23px;
+}
+
+.newBook__chapter {
+    width: auto;
+    display: inline-block;
+}
+.newBook__header span {
+    margin-left: 10px;
+}
+.newBook__header a {
+   padding-right: 5px;
+    border-right: 1px solid #ededed;
+}
+@media only screen and (max-width: 390px) {
+    .affix .top-nav__chapters-wrapper {
+        display: none;
+    }
+    .affix .container {
+        padding: 0;
+    }
+    .top-nav__left {
+        width: 90%;
+    }
+    .top-nav__title {
+        width: 65%;
+    }
+    .affix .addthis_toolbox a {
+        float: none;
+        display: block;
+        margin-bottom: 27px;
+    }
+}

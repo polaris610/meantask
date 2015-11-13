@@ -1,0 +1,127 @@
+<div id="home" ng-controller="HeaderController">
+	<div class="site-header">
+		<div class="top-header">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-4 col-sm-3 col-xs-7">
+						<div class="left-header">
+							<ul class="social-icons">
+								<li><a href="#" class="fa fa-facebook"></a></li>
+								<li><a href="#" class="fa fa-twitter"></a></li>
+								<li><a href="#" class="fa fa-google-plus"></a></li>
+							</ul>
+						</div> <!-- /.left-header -->
+					</div> <!-- /.col-md-6 -->
+					<div class="col-md-8 col-sm-9 col-xs-5 clearfix">
+						<div class="right-header">
+							<ul data-ng-hide="authentication.user">
+								<li>
+									<a href="" data-ng-click="openModal()">
+										<i class="fa fa-sign-in"></i>
+										Sign In
+									</a>
+								</li>
+							</ul>
+							<ul data-ng-show="authentication.user">
+								<li class="hidden-sm hidden-xs">
+									<i class="fa fa-user"></i>
+									<span data-ng-bind="authentication.user.firstName"></span>
+								</li>
+								<li class="hidden-xs" data-ng-if="shouldDisplay(authentication.user)">
+									<a href="/#!/users">
+										<i class="fa fa-users"></i>
+										List users
+									</a>
+								</li>
+								<li class="hidden-xs">
+									<a href="/#!/settings/profile">
+										<i class="fa fa-pencil-square-o"></i>
+										Edit Profile
+									</a>
+								</li>
+								<li class="hidden-xs" data-ng-show="authentication.user.provider === 'local'">
+									<a href="/#!/settings/password">
+										<i class="fa fa-key"></i>
+										Change Password
+									</a>
+								</li>
+								<li>
+									<a href="/api/auth/signout">
+										<i class="fa fa-sign-out"></i>
+										Signout
+									</a>
+								</li>
+							</ul>
+						</div>
+					</div> <!-- /.col-md-6 -->
+				</div> <!-- /.row -->
+			</div> <!-- /.container -->
+		</div> <!-- /.top-header -->
+		<div class="main-header" scroll>
+			<div class="container">
+				<div class="row">
+					<div class="col-md-2 col-sm-2 col-xs-2 no-pad">
+						<div class="logo">
+							<a href="/#!/" title="{{title}}">
+								<img src="m/core/l_logo.png" alt="{{title}}"/>
+							</a>
+						</div>
+					</div> <!-- /.col-md-1 -->
+					<div class="col-md-9 col-sm-10 col-xs-8 no-pad" data-ng-if="menu.shouldRender(authentication.user)">
+
+						<div class="col-md-8 col-sm-8 no-pad col-xs-10">
+						<div class="menu">
+							<ul>
+								<li class="menu-about"><a href="/#!/about" ng-class="{current: currentLocation === '/about'}">About</a></li>
+								<li class="menu-video"><a href="/#!/videos" ng-class="{current: currentLocation === '/videos'}">Videos</a></li>
+								<li class="menu-book"><a href="/#!/books" ng-class="{current: currentLocation === '/books'}">Books</a></li>
+								<li class="menu-blog"><a href="/#!/blog" ng-class="{current: currentLocation === '/blog'}">Blog</a></li>
+							</ul>
+						</div> <!-- /.menu -->
+						</div>
+						<div class="col-md-4 col-sm-4 no-pad hidden-xs">	
+						<form class="navbar-form no-pad" role="search" method="get" id="search-form" name="search-form">
+							<div class="input-group">
+								<input id="searchQuery"
+									   ng-model="search.text"
+									   ng-change="querySearch()"
+									   type="text"
+									   class="form-control"
+									   placeholder="Search for ...">
+								<div class="input-group-btn">
+									<button ng-click="querySearch(true)" type="submit" class="btn btn-primary">
+										<span class="glyphicon glyphicon-search"></span>
+									</button>
+								</div>
+							</div>
+						</form>
+						</div>
+					<div class="col-xs-2 visible-xs no-pad">
+						<button data-ng-click="openSearch()" type="submit" class="btn btn-primary">
+							<span class="glyphicon glyphicon-search"></span>
+						</button>
+					</div>										
+					</div><!-- /.col-md-10 -->	
+					<div class="responsive-menu text-center visible-xs col-xs-2">
+						<a href="" class="fa fa-bars fa-2x" data-ng-click="showMenu = !showMenu"></a>
+						<div class="menu" data-ng-show="showMenu">
+							<ul>
+								<li class="menu-about-mob"><a href="/#!/about" data-ng-click="showMenu = false">About</a></li>
+								<li class="menu-vid-mob"><a href="/#!/videos" data-ng-click="showMenu = false">Videos</a></li>
+								<li class="menu-book-mob"><a href="/#!/books" data-ng-click="showMenu = false">Books</a></li>
+								<li class="menu-blog-mob"><a href="/#!/blog" data-ng-click="showMenu = false">Blog</a></li>
+							</ul>
+						</div> <!-- /.menu -->
+					</div> <!-- /.responsive-menu -->
+					<div class="col-md-1 no-pad hidden-sm hidden-xs">
+							<div class="logo">
+								<a href="/#!/" title="{{title}}">
+									<img src="m/core/r_logo.png" alt="{{title}}"/>
+								</a>
+							</div>
+					</div><!-- /.col-md-1 -->				
+				</div> <!-- /.row -->
+			</div> <!-- /.container -->
+		</div> <!-- /.header -->
+	</div> <!-- /.site-header -->
+</div> <!-- /#home -->

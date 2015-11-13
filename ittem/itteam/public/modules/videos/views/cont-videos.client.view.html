@@ -1,0 +1,26 @@
+<div class="col-md-2 col-sm-3 col-xs-4 vid-lukup">
+    <div class="vid-lukup-img">
+        <img ng-src="m/thumb/video/{{video.embed.thumb}}" alt="Video">
+        <div class="overlay">
+            <a data-ng-href="#!/videos/{{video._id}}" class="vid-lukup-play">
+                <i class="fa fa-play fa-2x"></i>
+            </a>
+        </div> <!-- /.overlay -->
+    </div>
+    <div class="vid-lukup-desc">
+        <div class="inner-title">
+           <a data-ng-href="#!/videos/{{video._id}}" title="{{video.title.en}}">{{ video.title.en }}</a>
+        </div>
+        <div class="inner-info">
+            <div class="inner-desc">by  <span data-ng-bind="video.author.displayName"></span>
+            </div>
+            <div class="vid-play-btn">
+                <a data-ng-click="open(video)" title="Play video instantly"><i class="fa fa-desktop"></i></a>
+                <div class="tooltip" ng-if="$index === 0" ng-class="{active: tooltip}">
+                    <p>Click for instant play</p>
+                    <div class="arrow"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,199 @@
+<section data-ng-hide="loading">
+	<!-- /Main page Secondary menu -->
+	<div class="secondary-nav">
+	  <ul class="navbar-nav">
+		<li><a href="#homePage" du-smooth-scroll du-scrollspy offset="150"><i class="fa fa-home fa-2x"></i></a> </li>
+		<li><a href="#video" du-smooth-scroll du-scrollspy><i class="fa fa-video-camera fa-2x"></i></a> </li>
+		<li><a href="#books" du-smooth-scroll du-scrollspy><i class="fa fa-book fa-2x"></i></a> </li>
+		<li><a href="#social" du-smooth-scroll><i class="fa fa-facebook fa-2x"></i><i class="fa fa-twitter fa-2x"></i></a> </li>
+	  </ul>
+	</div>
+
+<!-- /flexslider -->
+
+<div class="container">
+	<div class="row">
+		<carousel interval="carouselInterval">
+			<slide ng-repeat="slide in slides" active="slide.active">
+				<a ng-href="#!/videos/{{ slide.video._id }}">
+					<img ng-src="m/upload/{{slide.video.embed.thumb}}" style="margin:auto;height: 400px;">
+					<div class="carousel-caption">
+						<h4>{{ slide.video.title.en }}</h4>
+						<p>{{ slide.video.description.en }}</p>
+					</div>
+				</a>
+			</slide>
+		</carousel>
+	</div>
+<!--
+	<div class="row">
+		<flex-slider flex-slide="slide in slides track by $index" animation="fade" control-nav='false' next-text='' prev-text=''>
+			<li>
+				<img ng-src="m/upload/{{slide.video.embed.thumb}}">
+				<div class="flex-caption animated bounceInDown">
+					<h2>
+						<a ng-href="#!/videos/{{ slide.video._id }}">{{ slide.video.title.en }}</a>
+					</h2>
+					<span></span>
+					<p>{{ slide.video.description.en }}</p>
+				</div>
+			</li>
+		</flex-slider>
+	</div>
+-->
+</div>
+
+<!-- /End flexslider-->
+
+	<div id="homePage" class="container" analytics-on="scrollby">
+	<div class="row">
+		<div class="col-lg-6 col-md-6">
+			<img class='img-responsive' src="m/core/abt.jpg">
+		</div>
+		<div class="col-lg-6 col-md-6 txt-justify">
+			<!-- /# About first post-->
+			<div data-ng-class="{'col-ur': lang === 'ur'}">
+				<button class="btn btn_lang"
+						data-ng-click="changeLang()">
+					<i class="fa fa-language"></i>
+				</button>
+				<h2 data-ng-bind="about.title[lang]"></h2>
+				<p data-ng-bind="about.body[lang]"></p>
+			</div>
+		</div>
+	</div>
+	</div>
+	<!-- /#Featured content -->
+	<div id="featured" class="social-activity" analytics-on="scrollby">
+		<div class="container">
+			<div class="title-section text-center">
+				<h2>Featured content</h2>
+				<span></span>
+			</div> <!-- /.title-section -->
+			<div class="row">
+				<div class="col-sm-4 col-xs-12 vid-lukup vid-lukup_home" ng-show="featured.video">
+					<div class="vid-lukup-img">
+						<img ng-src="m/thumb/video/{{featured.video.embed.thumb}}" alt="Featured Video">
+						<div class="overlay">
+							<a data-ng-href="#!/videos/{{featured.video._id}}" class="vid-lukup-play">
+								<i class="fa fa-play fa-2x"></i>
+							</a>
+						</div> <!-- /.overlay -->
+					</div>
+					<div class="inner-title">
+						<a data-ng-href="#!/videos/{{featured.video._id}}">{{ featured.video.title[lang] | cut: true: 63:' ...' }}</a>
+					</div>
+					<div class="inner-info">by  <span data-ng-bind="featured.video.author.displayName | cut: true: 23:' ...'"></span>
+						<div class="vid-play-btn">
+							<a data-ng-click="open(featured.video)"><i class="fa fa-youtube-play fa-2x"></i></a>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-4 col-xs-12 center" ng-show="featured.book">
+					<div class="latest-books__thumb featured__book">
+						<img ng-src="m/thumb/book/{{featured.book.thumbnail}}" alt="Featured Book">
+						<div class="overlay">
+							<div class="inner">
+								<h4><a data-ng-href="#!/books/{{featured.book._id}}"
+									   data-ng-bind="featured.book.title[lang]"></a>
+								</h4>
+								<small class="list-group-item-text">
+									Posted on
+									<span data-ng-bind="featured.book.created | date:'mediumDate'"></span>
+								</small>
+							</div>
+						</div> <!-- /.overlay -->
+					</div> <!-- /.portfolio-thumb -->
+				</div>
+				<div class="col-sm-4 col-xs-12" ng-show="featured.post">
+					<h4><a data-ng-href="#!/blog/{{featured.post._id}}" ng-bind="featured.post.title[lang]"></a></h4>
+					<p>{{featured.post.body[lang] | cut: true: 85:' ...' }}</p>
+				</div>
+			</div>
+		</div>
+	</div>
+<!-- /#Latest-Videos -->
+	<div id="video" class="latest-video" analytics-on="scrollby">
+	<div class="container">
+			<div class="title-section text-center">
+				<h2>Latest videos</h2>
+				<span></span>
+			</div> <!-- /.title-section -->
+		<div class="row">
+
+			<div data-ng-include="'/modules/videos/views/cont-videos.client.view.html'" data-ng-repeat="video in latestVideos"></div>
+
+		</div><!-- /.row -->
+			<div class="center">
+				<a href="/#!/videos" ><input type="submit" class="mainBtn" value="More Videos ..."/></a>
+			</div>
+		<div class="row">
+			<div class="title-section text-center">
+				<h2><i class="fa fa-tag"></i> Tags</h2>
+			</div>
+			<jqcloud words="categories"
+					 font-size="{from: 0.02, to: 0.05}"
+					 auto-resize="true" 
+					 width="auto"
+					 delay="10" 
+					 height="200"
+					 shape="elliptic">
+			 </jqcloud>
+		</div>
+	</div> <!-- /#container -->
+	</div> <!-- /.latest-video -->
+
+<!-- /#Latest-Books -->
+	<div id="books" class="section-content latest-books" analytics-on="scrollby">
+		<div class="container">
+			<div class="row">
+				<div class="title-section text-center">
+					<h2>Books of ....</h2>
+					<span></span>
+				</div> <!-- /.title-section -->
+				<div class="col-md-3 col-sm-6" data-ng-repeat="item in [1,1,1,1] track by $index">
+					<div class="latest-books__thumb">
+						<img src="m/thumb/book/book-of-giants.jpg" alt="Book Item 1">
+						<div class="overlay">
+							<div class="inner">
+								<h4><a href="m/thumb/book/book-of-giants.jpg">Nulla non enim</a></h4>
+								<span>Template</span>
+							</div>
+						</div> <!-- /.overlay -->
+					</div> <!-- /.portfolio-thumb -->
+				</div> <!-- /.col-md-3 -->
+				<div class="center">
+					<a href="/#!/books" ><input type="submit" class="mainBtn" value="Books by all Authors ..."/></a>
+				</div>
+			</div> 	<!-- /.row -->	
+			</div> <!-- /.container -->
+		</div> <!-- /.latest-books -->
+
+<!-- /#Social Activity -->
+	<div id="social" class="social-activity" analytics-on="scrollby">
+	<div class="container">
+		<div class="title-section text-center">
+			<h2><i class="fa fa-facebook"></i>
+			Social Activity
+			<i class="fa fa-twitter"></i></h2>
+			<span></span>
+		</div> <!-- /.title-section -->
+		<div class="row">
+			<div class="col-md-6 col-sm-6 col-xs-12">
+				<div class="title-section text-center">
+					<h3><i class="fa fa-facebook"></i> Facebook</h3>
+					<span></span>
+				</div> <!-- /.title-section -->
+			</div>
+			<div class="col-md-6 col-sm-6 col-xs-12">
+				<div class="title-section text-center">
+					<h3>Twitter <i class="fa fa-twitter"></i></h3>
+					<span></span>
+				</div> <!-- /.title-section -->
+			</div>				
+		</div> <!-- /#row -->
+	</div> <!-- /#container -->
+	</div> <!-- /.latest-video -->
+
+	</div> <!-- /.row-->
+</section>

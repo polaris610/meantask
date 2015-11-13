@@ -1,0 +1,83 @@
+<section class="container">
+    <section data-ng-init="getBook()">
+        <div class="page-header newBook__header">
+            <h1>
+                <a data-ng-href="/#!/books/{{book._id}}">
+                    <i class="glyphicon glyphicon-arrow-left"></i>
+                    Back to book
+                </a>
+                <span>Add content</span>
+            </h1>
+        </div>
+        <div class="alert alert-dismissible"
+             role="alert"
+             data-ng-if="info.status"
+             data-ng-class="{'alert-{{info.status}}': info.status}">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true" data-ng-click="closeAlert()">&times;</span>
+            </button>
+            {{info.message}}
+        </div>
+        <form name="addContent" action="" class="col-md-12 newBook">
+            <div class="row">
+                <div class="col-sm-12 center-block">
+                    <h2>What do you prefer to add?
+                        <label class="radio-inline">
+                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="chapter" data-ng-model="book.add.mode">
+                            Chapter
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="subchapter" data-ng-model="book.add.mode">
+                            Subchapter
+                        </label>
+                    </h2>
+                    <h2 data-ng-show="book.add.mode">Languages available for this content:
+                        <label class="checkbox-inline" for="lang-en">
+                            <input id="lang-en" type="checkbox" name="lang-en" data-ng-model="book.add.language['English']"/>
+                            English
+                        </label>
+                        <label class="checkbox-inline" for="lang-ur">
+                            <input id="lang-ur" type="checkbox" name="lang-ur" data-ng-model="book.add.language['Urdu']"/>
+                            Urdu
+                        </label>
+                    </h2>
+                    <h2 data-ng-if="book.add.mode === 'subchapter'">
+                        <label for="chapter">Select chapter:</label>
+                        <select id="chapter" class="form-control newBook__chapter" ng-options="num for num in book.chaptersCount" data-ng-model="book.add.chapter" required></select>
+                    </h2>
+                </div>
+            </div>
+            <div class="newBook__content" data-ng-show="book.add.language['Urdu'] || book.add.language['English']">
+                <div class="content__title">
+                    <p class="center">Content</p>
+                    <div class="row">
+                        <div class="col-sm-6 form-group" data-ng-if="book.add.language['English']">
+                            <label for="content__title--en">English title</label>
+                            <input id="content__title--en" type="text" class="form-control" name="content__title--en" data-ng-model="book.add.title.en" required/>
+                        </div>
+                        <div class="col-sm-6 col-ur form-group" data-ng-if="book.add.language['Urdu']">
+                            <label for="content__title--ur" >Urdu title</label>
+                            <input id="content__title--ur" type="text" class="form-control" name="content__title--ur" data-ng-model="book.add.title.ur" required/>
+                        </div>
+                    </div>
+                </div>
+                <div class="content__body">
+                    <div class="row">
+                        <div class="col-sm-6 form-group" data-ng-if="book.add.language['English']">
+                            <label for="body-en">English body</label>
+                            <textarea id="body-en" class="form-control" name="body-en" data-ng-model="book.add.content.en"></textarea>
+                        </div>
+                        <div class="col-sm-6 col-ur form-group" data-ng-if="book.add.language['Urdu']">
+                            <label for="body-ur" >Urdu body</label>
+                            <textarea id="body-ur" class="form-control" name="body-ur" data-ng-model="book.add.content.ur"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="newBook__action">
+                    <a class="btn btn-primary" data-ng-click="save()" data-ng-class="{disabled: !addContent.$valid}" data-ng-if="!isCreating">Add</a>
+                </div>
+            </div>
+
+        </form>
+    </section>
+</section>

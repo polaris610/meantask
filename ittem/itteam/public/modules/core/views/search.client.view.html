@@ -1,0 +1,15 @@
+
+	<form class="navbar-form no-pad" role="search" method="get" id="search-form" name="search-form">
+		<div class="input-group">
+			<input ng-model="search.text"
+				   ng-change="querySearch()"
+				   type="text"
+				   class="form-control"
+				   placeholder="Search for ...">
+			<div class="input-group-btn">
+				<button ng-click="querySearch(true)" type="submit" class="btn btn-primary">
+					<span class="glyphicon glyphicon-search"></span>
+				</button>
+			</div>
+		</div>
+	</form>

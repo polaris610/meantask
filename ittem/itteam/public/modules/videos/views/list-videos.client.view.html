@@ -1,0 +1,173 @@
+<header class="videos" affix data-ng-show="!loading">
+    <div class="container">
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-10 col-xs-12">
+                    <div class="row">
+                        <div class="col-sm-4 col-xs-6">
+                            <dl class="dl-horizontal subcats" data-ng-show="selectedSubCats.length">
+                                <dt class="sub-title">Subcategories: </dt>
+                                <dd>
+                                    <p data-ng-repeat="cat in selectedSubCats" class="tag-selected">
+                                        <a href data-ng-bind="cat"></a>
+                                        <button type="button"
+                                                class="close"
+                                                aria-label="Close"
+                                                data-ng-click="deselect(cat)">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </p>
+                                    <!--<p data-ng-click="resetFilter()" class="reset-btn">Reset</p>-->
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="col-sm-4 col-xs-6">
+                            <dl class="dl-horizontal subcats" data-ng-show="selectedWords.length">
+                                <dt class="sub-title">Keywords: </dt>
+                                <dd class="subcats_keywords">
+                                    <p data-ng-repeat="word in selectedWords" class="tag-selected">
+                                        <a href data-ng-bind="word"></a>
+                                        <button type="button"
+                                                class="close"
+                                                aria-label="Close"
+                                                data-ng-click="deselect(word, true)"><span aria-hidden="true">&times;</span></button>
+                                    </p>
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="col-sm-4 col-xs-12 right video-options">
+                            <h2 class="clearfix">
+                                <div class="pull-left visible-xs-block currentCategory">
+                                    Active category:
+                                    <h1 class="text-capitalize" data-ng-bind="currentCategory"></h1>
+                                </div>
+                                <div class="drop-menu responsive-menu text-center pull-right visible-xs-block">
+                                    <a href="" class="fa fa-list-ul fa-2x" data-ng-click="showMenu = !showMenu"></a>
+                                    <div id="aside--mobile" class="menu" data-ng-show="showMenu">
+                                    </div> <!-- /.menu -->
+                                </div> <!-- /.responsive-menu -->
+                                <div class="pull-right" data-ng-show="canCreate">
+                                    <a href="/#!/videos/create">
+                                        <button type="button" class="btn btn-success">
+                                            <i class="glyphicon glyphicon-plus"></i>
+                                            New Video
+                                        </button>
+                                    </a>
+                                </div>
+                                <div class="pull-right">
+                                    <button type="button"
+                                            class="btn"
+                                            data-ng-click="audioFilter()"
+                                            data-ng-class="{'btn-success': withAudio}">
+                                        <i class="fa fa-headphones"></i>
+                                    </button>
+                                </div>
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-2 col-xs-12 hidden-xs currentCategory">
+                    <span>Active category:</span>
+                    <div class="clearfix">
+                        <div class="hed-base hed-base-ur">                        
+                        <h4 class="text-capitalize pull-left" data-ng-bind="currentCategory"></h4>
+                        <button type="button" class="close pull-right" aria-label="Close"
+                                ng-show="currentCategory" ng-click="resetActiveCat()">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<section class="container" data-ng-show="!loading">
+    <section data-ng-init="find()">
+        <div class="row">
+            <div class="col-sm-10 col-xs-12">
+                <div>
+                    <div class="col-md-8 col-sm-10 col-xs-12">
+                        <div class="vid-lukup-img">
+                            <img ng-src="m/thumb/video/{{featured.embed.thumb}}" alt="Video">
+                            <div class="overlay">
+                                <a data-ng-href="#!/videos/{{featured._id}}" class="vid-lukup-play">
+                                    <i class="fa fa-play fa-2x"></i>
+                                </a>
+                            </div> <!-- /.overlay -->
+                        </div>
+                        <div class="vid-lukup-desc">
+                        <div class="inner-title">
+                            <a data-ng-href="#!/videos/{{featured._id}}">{{ featured.title.en | cut: true: 63:' ...' }}</a>
+                        </div>
+                        <div class="inner-info">
+                            <div class="inner-desc">by  <span data-ng-bind="featured.author.displayName | cut: true: 23:' ...'"></span>
+                            </div>
+                            <div class="vid-play-btn">
+                                <a data-ng-click="open(featured)"><i class="fa fa-desktop fa-2x"></i></a>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                <div data-ng-include="'/modules/videos/views/cont-videos.client.view.html'" data-ng-repeat="video in videos"></div>
+                </div> <!-- /.col-md-2 -->
+            </div><!-- /.row -->
+            <div class="col-sm-2 hidden-xs">
+                <div replace-component target="#aside--mobile">
+                    <div class="aside">
+                        <div class="hed-base hed-base-en">
+                            <h5>Videos per page</h5>
+                        </div>                        
+                        <select class="form-control" data-ng-options="p for p in [5, 10, 25, 50, 100]" data-ng-change="changeItemsPerPage()" data-ng-model="itemsPerPage"></select>
+                        <div class="hed-base hed-base-en">                        
+                            <h5>Authors & Speakers</h5>
+                        </div>   
+                        <select class="form-control" data-ng-options="a._id as a.displayName for a in authors" data-ng-model="selected"></select>
+                        <div class="hed-base hed-base-en">
+                            <h5>Categories</h5>
+                        </div>
+                        <nav class="bs-docs-sidebar">
+                            <ul id="sidebar" class="nav nav-stacked">
+                                <li data-ng-repeat="c in categories">
+                                    <a data-ng-href="{{ c.link }}"
+                                       data-ng-bind="c.text"></a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="aside" data-ng-show="subCats.length  ">
+                        <p class="aside__title">Sub-Categories</p>
+                        <ul>
+                            <li class="tag-selected"
+                                data-ng-repeat="cat in subCats">
+                                <a href
+                                   data-ng-click="filter(cat, false, $event)"
+                                   data-ng-bind="cat"
+                                   du-smooth-scroll="top"></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="aside" data-ng-show="keywords.length">
+                        <p class="aside__title">Keywords</p>
+                        <ul>
+                            <li class="tag-selected"
+                                data-ng-repeat="word in keywords">
+                                <a href
+                                   data-ng-click="filter(word, true, $event)"
+                                   data-ng-bind="word"
+                                   du-smooth-scroll="top"></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-10 col-xs-12 videos__pagination text-center">
+                <pagination total-items="bigTotalItems" items-per-page="itemsPerPage"  ng-model="currentPage" max-size="5" class="pagination-sm" boundary-links="true" rotate="false" num-pages="numPages"></pagination>
+            </div>
+        </div>
+
+        <div class="alert alert-warning text-center" data-ng-hide="!videos.$resolved || videos.length">
+            No Content available yet</a>?
+        </div>
+    </section>
+</section>

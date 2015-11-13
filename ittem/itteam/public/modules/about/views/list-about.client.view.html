@@ -1,0 +1,54 @@
+<section class="container">
+    <section data-ng-init="find()">
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h3>About
+                    <button class="btn btn_lang"
+                            data-ng-click="changeLang()">
+                        <i class="fa fa-language"></i>
+                        Change language
+                    </button></h3>
+                </div>
+                <div class="col-sm-6 right">
+                    <h2 data-ng-show="canCreate">
+                        <a href="/#!/about/create">
+                            <button type="button" class="btn btn-success">
+                                <i class="glyphicon glyphicon-plus"></i>
+                                New About
+                            </button>
+                        </a>
+                    </h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-md-6">
+                <img class='img-responsive' src="m/core/abt.jpg">
+            </div>
+            <div class="col-lg-6 col-md-6 txt-justify">
+                <!-- /# About first post-->
+                <div data-ng-class="{'col-ur': lang === 'ur'}">                        
+                <h2 data-ng-bind="about1.title[lang]"></h2>
+                <p data-ng-bind="about1.body[lang]"></p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div data-ng-repeat="about in abouts" class="col-sm-12">
+                <a data-ng-href="#!/about/{{about._id}}">
+                    <h2 data-ng-bind="about.title[about.about_language]"></h2>
+                </a>
+                <div ng-bind-html="about.body[about.about_language]"></div>
+                <small class="list-group-item-text">
+                    Posted on
+                    <span data-ng-bind="about.created | date:'mediumDate'"></span>
+                </small>
+                <hr>
+            </div>
+        </div>
+    <div class="alert alert-warning text-center" data-ng-hide="!abouts.$resolved || abouts.length">
+        No Content available yet?
+    </div>
+    </section>
+</section>

@@ -1,0 +1,110 @@
+<div class="row">
+  <div class="col-sm-8">
+  <div class="hed-base hed-base-en">
+    <h4 data-ng-bind="video.title.en"></h4>
+  </div>
+  <div class="hed-base hed-base-ur">
+    <h4 data-ng-bind="video.title.ur"></h4>
+  </div>
+  </div>
+  <div class="col-sm-4">
+    <!-- Go to www.addthis.com/dashboard to customize your tools -->
+    <div data-addthis-toolbox
+         data-url="{{MetaInformation.getUrl()}}"
+         data-title="{{PageTitle.title()}}"
+         class="addthis_toolbox addthis_default_style addthis_32x32_style">
+        <a href class="addthis_button_facebook"></a>
+        <a href class="addthis_button_twitter"></a>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-8 col-xs-12">
+    <div class="embedded embed-responsive embed-responsive-16by9" ng-bind-html="embedv"></div>
+    <div class="row" data-ng-show="checkAudio()">
+      <div class="embedded" ng-bind-html="embeda">
+      </div>
+    </div>
+    <div class="row">
+      <div class="hed-base hed-base-en">
+        <h6 data-ng-bind="video.description.en"></h6>
+      </div>
+      <div class="hed-base hed-base-ur">
+        <h6 data-ng-bind="video.description.ur"></h6>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-4 col-xs-12">
+    <div class="row">
+      <div class="col-sm-12 col-xs-12" data-ng-if="video.previous">
+        <div class="alert alert-success"><i class="fa fa-chevron-left"></i> Previous video
+        <div class="vid-lukup">
+          <div class="vid-lukup-img">
+            <img ng-src="m/thumb/video/{{video.previous.embed.thumb}}" alt="{{video.previous.title.en}}">
+            <div class="overlay">
+                <a data-ng-href="#!/videos/{{video.previous._id}}" class="vid-lukup-play">
+                    <i class="fa fa-play fa-2x"></i>
+                </a>
+            </div>
+          </div>
+          <div class="vid-lukup-desc">
+            <div class="inner-title">
+               <a data-ng-href="#!/videos/{{video.previous._id}}" title="{{video.previous.title.en}}">{{ video.previous.title.en }}</a>
+            </div>
+            <div class="inner-info">
+              <div class="inner-desc">by  <span data-ng-bind="video.author.label"></span>
+              </div>
+              <div class="vid-play-btn">
+                  <a data-ng-click="openv(video.previous)" title="Play video instantly"><i class="fa fa-desktop"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+      <div class="col-sm-12 col-xs-12" data-ng-if="video.next">
+        <div class="alert alert-success"><i class="fa fa-chevron-right"></i> Next video
+        <div class="vid-lukup">
+          <div class="vid-lukup-img">
+            <img ng-src="m/thumb/video/{{video.next.embed.thumb}}" alt="{{video.next.title.en}}">
+            <div class="overlay">
+              <a data-ng-href="#!/videos/{{video.next._id}}" class="vid-lukup-play">
+                  <i class="fa fa-play fa-2x"></i>
+              </a>
+            </div>
+          </div>
+          <div class="vid-lukup-desc">
+            <div class="inner-title">
+              <a data-ng-href="#!/videos/{{video.next._id}}" title="{{video.next.title.en}}">{{ video.next.title.en }}</a>
+            </div>
+            <div class="inner-info">
+              <div class="inner-desc">by  <span data-ng-bind="video.author.label"></span>
+              </div>
+              <div class="vid-play-btn">
+                  <a data-ng-click="openv(video.next)" title="Play video instantly"><i class="fa fa-desktop"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>        
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row posted">
+  <div class="col-xs-12 col-md-6">
+    <small>
+      <em class="text-muted">
+        Posted on
+        <span data-ng-bind="video.created | date:'mediumDate'"></span>
+    <!--    by
+        <span data-ng-bind="video.user.displayName"></span>--> in categories
+        <a class="tag-selected"
+           data-ng-repeat="cat in video.categories"
+           data-ng-href="#!/videos?category={{ cat }}"
+           data-ng-bind="cat">
+        </a>
+      </em>
+    </small>
+  </div>
+</div>

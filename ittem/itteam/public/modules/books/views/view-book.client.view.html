@@ -1,0 +1,190 @@
+<section class="container book" data-ng-show="book">
+    <section data-ng-init="findOne()">
+        <div class="row">
+            <div data-ng-class="{'col-sm-9': !isAffixNow, 'col-sm-12': isAffixNow}">
+                <div class="page-header" data-ng-if="!canEdit">
+                    <div class="row">
+                        <div class="col-sm-12" data-ng-class="{'col-ur': lang === 'ur'}">
+                            <h3 data-ng-bind="book.title[lang]"></h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12" data-ng-class="{'col-ur': lang === 'ur'}">
+                            <p data-ng-bind="book.description[lang]"></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12" data-ng-class="{'col-ur': lang === 'ur'}">
+                            <div id="begin" class="book-chapter">
+                                <h4 data-ng-bind="content.title[lang]"></h4>
+                                <div ng-bind-html="content.content[lang]"></div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Here comes the code for Editor/Reviwer -->
+                <div class="page-header no-animate" data-ng-if="canEdit">
+                    <ul class="nav nav-tabs">
+                        <li role="presentation" class="active"><a title="View page">View</a></li>
+                        <li role="presentation">
+                            <a data-ng-href="{{editUrl}}" title="Edit book">
+                                <i class="glyphicon glyphicon-edit"></i>
+                                Edit
+                            </a>
+                        </li>
+                        <li role="presentation">
+                            <a data-ng-href="/#!/books/{{book._id}}/add" title="Add content">
+                                <i class="glyphicon glyphicon-plus"></i>
+                                Add
+                            </a>
+                        </li>
+                        <li role="presentation">
+                            <a title="Close book" data-ng-click="close();" data-ng-show="(book.status === 'open')">
+                                <i class="glyphicon glyphicon-remove"></i>
+                                Close
+                            </a>
+                            <a title="Open book" data-ng-click="open();" data-ng-show="(book.status !== 'open')">
+                                <i class="glyphicon glyphicon-ok"></i>
+                                Open
+                            </a>
+                        </li>
+                        <li role="presentation">
+                            <a data-ng-click="remove();" data-ng-show="Roles.hasAtLeastRole('admin')" title="Delete book">
+                                <i class="glyphicon glyphicon-trash"></i>
+                                Delete
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="pull-right right" data-ng-show="canEdit">
+                            <strong>Views:</strong>
+                            <span data-ng-show="canEdit" data-ng-bind="book.views"></span>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12" data-ng-class="{'col-ur': lang === 'ur'}">
+                            <h3 data-ng-bind="book.title[lang]"></h3>
+                        </div>
+                    </div>
+                    <div class="row mar-b-15">
+                        <div class="col-sm-12" data-ng-class="{'col-ur': lang === 'ur'}">
+                            <p data-ng-bind="book.description[lang]"></p>
+                        </div>
+                    </div>
+
+                    <div class="row mar-b-15">
+                        <div class="col-sm-12" data-ng-class="{'col-ur': lang === 'ur'}">
+                            <div class="book-chapter" id="begin">
+                                <h4 data-ng-bind="content.title[lang]"></h4>
+                                <div ng-bind-html="content.content[lang]"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div data-ng-class="{'col-sm-3': !isAffixNow}" affix>
+                <div data-ng-class="{'container': isAffixNow}">
+                    <div class="sub-nav clearfix">                        
+                            <div class="col-sm-2 no-pad">
+                            <div class="hed-base smenu-title-en">
+                                <h4 data-ng-bind="book.title[lang]"></h4>
+                            </div>
+                            </div>
+                            <div class="col-sm-1 no-pad">
+                                <button class="btn btn_lang"
+                                        data-ng-if="book.booklanguage.length === 2"
+                                        data-ng-click="changeLang()">
+                                    <i class="fa fa-language"></i>
+                                </button>
+                            </div>
+                            <div class="col-sm-2 no-pad">
+                            <div data-addthis-toolbox
+                                 data-url="{{MetaInformation.getUrl()}}"
+                                 data-title="{{PageTitle.title()}}"
+                                 data-ng-class="{'addthis_24x24_style': isAffixNow, 'addthis_32x32_style': !isAffixNow}"
+                                 class="addthis_toolbox addthis_default_style ">
+                                <a href class="addthis_button_facebook"></a>
+                                <a href class="addthis_button_twitter"></a>
+                            </div>  
+                            </div>
+                            <div class="col-sm-6 no-pad">                  
+                            <div class="top-nav__chapters-wrapper">
+                                <div class="chapters" data-ng-if="isAffixNow">
+                                    <h5 data-ng-if="menuTitle.chapter.title">
+                                        {{menuTitle.chapter.title[lang]}}
+                                        <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+                                    </h5>
+                                    <h5>
+                                        {{menuTitle.subchapter.title[lang]}}
+                                    </h5>
+                                </div>
+                            </div>
+                            </div>
+                        <div class="col-sm-1 responsive-menu text-center pull-right no-pad" data-ng-show="isAffixNow">
+                            <a href="" class="fa fa-list-ul fa-2x" data-ng-click="showMenu = !showMenu"></a>
+                            <div class="menu" data-ng-show="showMenu">
+                                <ul class="list-unstyled">
+                                    <li data-ng-repeat="chapter in book.tableOfContents">
+                                        <a href="#begin" data-ng-click="switchChapter($index)"
+                                           du-smooth-scroll
+                                           offset="90">
+                                            <span data-ng-bind="chapter.title[lang]"></span>
+                                            <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+                                        </a>
+                                        <ul ng-if="chapter.subchapters">
+                                            <li data-ng-repeat="sc in chapter.subchapters" >
+                                                <a href="#begin" data-ng-click="switchChapter($parent.$index, $index)"
+                                                   data-ng-bind="sc[lang]"
+                                                   du-smooth-scroll
+                                                   offset="90">
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div> <!-- /.menu -->
+                        </div> <!-- /.responsive-menu -->
+                    </div>
+                    <div class="side-nav clearfix">                        
+                        <div class="top-nav__left">
+                            <button class="btn btn_lang"
+                                    data-ng-if="book.booklanguage.length === 2"
+                                    data-ng-click="changeLang()">
+                                <i class="fa fa-language"></i>
+                                <span>Change language</span>
+                            </button>
+                            <div data-addthis-toolbox
+                                 data-url="{{MetaInformation.getUrl()}}"
+                                 data-title="{{PageTitle.title()}}"
+                                 data-ng-class="{'addthis_24x24_style': isAffixNow, 'addthis_32x32_style': !isAffixNow}"
+                                 class="addthis_toolbox addthis_default_style ">
+                                <a href class="addthis_button_facebook"></a>
+                                <a href class="addthis_button_twitter"></a>
+                            </div>
+                            <hr>
+                            <img class="book-thumb"
+                                 data-ng-if="book.thumbnail"
+                                 data-ng-src="m/thumb/book/{{ book.thumbnail }}">
+                            <hr>
+                            <p>Table of contents</p>                          
+                            <div class="top-nav__chapters-wrapper">
+                                <ul class="list-unstyled chapters" ng-if="!isAffixNow">
+                                    <li data-ng-repeat="chapter in book.tableOfContents">
+                                        <a data-ng-click="switchChapter($index)">
+                                            <span data-ng-bind="chapter.title[lang]"></span>
+                                            <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+                                        </a>
+                                        <ul ng-if="chapter.subchapters">
+                                            <li ng-repeat="sc in chapter.subchapters" >
+                                                <a data-ng-click="switchChapter($parent.$index, $index)" data-ng-bind="sc[lang]"></a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>

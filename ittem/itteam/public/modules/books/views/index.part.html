@@ -1,0 +1,5 @@
+{{ chapter.title }}
+<ul ng-if="chapter.subchapters">
+    <li ng-repeat="sc in chapter.subchapters" ng-include="''">
+    </li>
+</ul>
