@@ -1,0 +1,23 @@
+I have a MEAN (Mongodb/Express/Angular/Node) based application, i need extension to it. I need one section about Journals with following additions
+
+1. CRUD
+Main fields: 
+Journal1
+Month, Year, Journal status, Language
+Author, Article title, Article Body, Categories, Keywords, Article status
+Journal2
+Month, Year, Journal status, Language
+Author, Article title, Article Body, Categories, Keywords, Article status
+
+
+Hello,
+Thanks for your interest, could you please let me know when you can start and how long it will take? Here is the repository you can pull the code:
+
+https://bitbucket.org/nsaquib/itteam.git
+
+you can do “grunt fillData” to have initial data filled. You can take book section as reference for creating CRUD for Journal. There will be 2 Journals, Journal-1 and Journal-2.
+
+Let me know if you have any questions, or share your skypeID if you want to discuss further details.
+
+Thanks,
+Najam
